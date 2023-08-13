@@ -30,7 +30,7 @@ export default function LoginScreen({ navigation }) {
       password: "",
     },
     onSubmit: async (values) => {
-        await new Promise((r) => setTimeout(r, 2000));
+      await new Promise((r) => setTimeout(r, 2000));
       alert(JSON.stringify(values, null, 2));
     },
     validationSchema: validation,
@@ -75,7 +75,7 @@ export default function LoginScreen({ navigation }) {
               onBlur={handleBlur("email")}
             />
             <FormControl.ErrorMessage
-              leftIcon={<WarningOutlineIcon size="xs" />}
+              leftIcon={<WarningOutlineIcon size="2" />}
             >
               {errors.email}
             </FormControl.ErrorMessage>
@@ -99,29 +99,59 @@ export default function LoginScreen({ navigation }) {
               onBlur={handleBlur("password")}
             />
             <FormControl.ErrorMessage
-              leftIcon={<WarningOutlineIcon size="xs" />}
+              leftIcon={<WarningOutlineIcon size="2" />}
             >
               {errors.password}
             </FormControl.ErrorMessage>
           </FormControl>
         </Box>
 
-        <TouchableOpacity className="flex items-end mt-2">
-          <Text className="text-gray-700 mb-5">Forgot Password?</Text>
+        <TouchableOpacity className="flex items-end">
+          <Text className="text-gray-700 mb-1">Forgot Password?</Text>
         </TouchableOpacity>
 
         <Button
           size="sm"
           bg="amber.400:alpha.70"
           isDisabled={isSubmitting}
-          style={{ color: "white" }}
+         className="text-white"
           onPress={handleSubmit}
           isLoadingText="Giriş Yapılıyor"
         >
           Login
         </Button>
+        <Text className="text-lg text-gray-700 font-bold text-center py-2">
+          Or
+        </Text>
+        <View className="flex-row justify-center space-x-12">
+          <TouchableOpacity className="p-2 bg-gray-100 rounded-2xl">
+            <Image
+              source={require("../assets/icons/google.png")}
+              className="w-10 h-10"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity className="p-2 bg-gray-100 rounded-2xl">
+            <Image
+              source={require("../assets/icons/apple.png")}
+              className="w-10 h-10"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity className="p-2 bg-gray-100 rounded-2xl">
+            <Image
+              source={require("../assets/icons/facebook.png")}
+              className="w-10 h-10"
+            />
+          </TouchableOpacity>
+        </View>
+        <View className="flex-row justify-center mt-3">
+          <Text className="text-gray-500 font-semibold">
+            Don't have an account?
+          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("SignUp")}>
+            <Text className="font-semibold text-yellow-500"> Sign Up</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
 }
-

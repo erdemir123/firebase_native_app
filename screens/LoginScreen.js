@@ -6,7 +6,13 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useFormik } from "formik";
 
 import { Image } from "react-native";
-import { Box, FormControl, Input, WarningOutlineIcon } from "native-base";
+import {
+  Box,
+  FormControl,
+  Input,
+  WarningOutlineIcon,
+  Button,
+} from "native-base";
 import validation from "../components/validation";
 
 export default function LoginScreen({ navigation }) {
@@ -23,7 +29,8 @@ export default function LoginScreen({ navigation }) {
       email: "",
       password: "",
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+        await new Promise((r) => setTimeout(r, 2000));
       alert(JSON.stringify(values, null, 2));
     },
     validationSchema: validation,
@@ -62,6 +69,7 @@ export default function LoginScreen({ navigation }) {
               py="4"
               variant="filled"
               rounded="xl"
+              type="text"
               value={values.email}
               onChangeText={handleChange("email")}
               onBlur={handleBlur("email")}
@@ -84,6 +92,7 @@ export default function LoginScreen({ navigation }) {
               placeholder="Enter password"
               py="4"
               variant="filled"
+              type="password"
               rounded="xl"
               value={values.password}
               onChangeText={handleChange("password")}
@@ -100,12 +109,19 @@ export default function LoginScreen({ navigation }) {
         <TouchableOpacity className="flex items-end mt-2">
           <Text className="text-gray-700 mb-5">Forgot Password?</Text>
         </TouchableOpacity>
-        <TouchableOpacity className="py-3 bg-yellow-400 rounded-xl" onPress={handleSubmit}>
-          <Text className="text-xl font-bold text-center text-gray-700">
-            Login
-          </Text>
-        </TouchableOpacity>
+
+        <Button
+          size="sm"
+          bg="amber.400:alpha.70"
+          isDisabled={isSubmitting}
+          style={{ color: "white" }}
+          onPress={handleSubmit}
+          isLoadingText="Giriş Yapılıyor"
+        >
+          Login
+        </Button>
       </View>
     </View>
   );
 }
+

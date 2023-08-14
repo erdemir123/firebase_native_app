@@ -14,8 +14,12 @@ import {
   Button,
 } from "native-base";
 import validation from "../components/validation";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../config/fireBase";
+import { useNavigation } from "@react-navigation/native";
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
+  const {navigate} = useNavigation()
   const {
     values,
     handleBlur,
@@ -31,7 +35,16 @@ export default function LoginScreen({ navigation }) {
     },
     onSubmit: async (values) => {
       await new Promise((r) => setTimeout(r, 2000));
-      alert(JSON.stringify(values, null, 2));
+      try {
+        await signInWithEmailAndPassword(
+          auth,
+          values.email,
+          values.password
+        );
+        navigate("Home")
+      } catch (err) {
+        console.log("err", err);
+      }
     },
     validationSchema: validation,
   });
@@ -55,7 +68,7 @@ export default function LoginScreen({ navigation }) {
       </SafeAreaView>
       <View
         style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
-        className="flex-1 bg-white px-8 -mt-24 pt-4"
+        className="flex-1 bg-white px-8 -mt-32 pt-4"
       >
         <Box alignItems="center">
           <FormControl
@@ -70,6 +83,8 @@ export default function LoginScreen({ navigation }) {
               variant="filled"
               rounded="xl"
               type="text"
+              autoCapitalize="words"
+              autoComplete="email"
               value={values.email}
               onChangeText={handleChange("email")}
               onBlur={handleBlur("email")}
@@ -107,15 +122,16 @@ export default function LoginScreen({ navigation }) {
         </Box>
 
         <TouchableOpacity className="flex items-end">
-          <Text className="text-gray-700 mb-1">Forgot Password?</Text>
+          <Text className="text-gray-700 my-2">Forgot Password?</Text>
         </TouchableOpacity>
 
         <Button
           size="sm"
           bg="amber.400:alpha.70"
           isDisabled={isSubmitting}
-         className="text-white"
+          className="text-white"
           onPress={handleSubmit}
+          isLoading={isSubmitting}
           isLoadingText="Giriş Yapılıyor"
         >
           Login

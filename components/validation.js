@@ -5,6 +5,7 @@ const messages = {
   min: "en az 5 karakter giriniz",
   number: "sadece sayı giriniz",
   pass: "Şifre en az 1 büyük harf 1 rakam , 1 özel işaret ve uzunluğu en 6 karakter olmalıdır",
+  fullname: "sadece harf giriniz",
 };
 const validation = object({
   password: string()
